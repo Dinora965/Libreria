@@ -1,0 +1,13 @@
+# Ignorar archivos temporales de Visual Studio
+.vs/
+.vscode/
+bin/
+obj/
+
+# Ignorar archivos de compilación
+*.dll
+*.exe
+*.log
+
+# Ignorar dependencias de Node.js
+node_modules/
