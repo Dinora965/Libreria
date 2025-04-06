@@ -4,7 +4,6 @@ using DevExtremeLibreria.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -13,17 +12,17 @@ using System.Web.Http;
 
 namespace DevExtremeLibreria.Controllers
 {
-    public class AutorController : ApiController
+    public class LibroController : ApiController
     {
         private static readonly HttpClient client = new HttpClient();
         [HttpGet]
         public async Task<HttpResponseMessage> Get(DataSourceLoadOptions loadOptions)
         {
-            var apiUrl = "https://localhost:44370/api/GetAutores";
+            var apiUrl = "https://localhost:44370/api/GetLibros";
             var respuestaJson = await GetAsync(apiUrl);
             //System.Diagnostics.Debug.WriteLine(respuestaJson); imprimir info
-            List<Autor> listaAutor = JsonConvert.DeserializeObject<List<Autor>>(respuestaJson);
-            return Request.CreateResponse(DataSourceLoader.Load(listaAutor, loadOptions));
+            List<Libro> listaLibro = JsonConvert.DeserializeObject<List<Libro>>(respuestaJson);
+            return Request.CreateResponse(DataSourceLoader.Load(listaLibro, loadOptions));
         }
 
         public static async Task<string> GetAsync(string uri)
@@ -54,20 +53,20 @@ namespace DevExtremeLibreria.Controllers
             var key = Convert.ToInt32(form.Get("key")); //llave que estoy modificando
             var values = form.Get("values"); //Los valores que yo modifiqué en formato JSON
 
-            var apiUrlGetAutor = "https://localhost:44370/api/GetAutores" + key;
-            var respuestaAutor = await GetAsync(apiUrlGetAutor = "https://localhost:44370/api/GetAutores" + key);
-            Autor autor = JsonConvert.DeserializeObject<Autor>(respuestaAutor);
+            var apiUrlGetLibro = "https://localhost:44370/api/GetLibros" + key;
+            var respuestaLibro = await GetAsync(apiUrlGetLibro = "https://localhost:44370/api/GetLibros" + key);
+            Libro libro = JsonConvert.DeserializeObject<Libro>(respuestaLibro);
 
-            JsonConvert.PopulateObject(values, autor);
+            JsonConvert.PopulateObject(values, libro);
 
-            string jsonString = JsonConvert.SerializeObject(autor);
+            string jsonString = JsonConvert.SerializeObject(libro);
             var httpContent = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
 
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
             using (var client = new HttpClient(handler))
             {
-                var url = "https://localhost:44370/api/PutAutores" + key;
+                var url = "https://localhost:44370/api/PutLibros" + key;
                 var response = await client.PutAsync(url, httpContent);
 
                 var result = response.Content.ReadAsStringAsync().Result;
@@ -86,7 +85,7 @@ namespace DevExtremeLibreria.Controllers
 
             var httpContent = new StringContent(values, System.Text.Encoding.UTF8, "application/json");
 
-            var url = "https://localhost:44370/api/PostAutores";
+            var url = "https://localhost:44370/api/PostLibros";
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
             using (var client = new HttpClient(handler))
@@ -104,16 +103,14 @@ namespace DevExtremeLibreria.Controllers
         {
             var key = Convert.ToInt32(form.Get("key"));
 
-            var apiUrlDelPeli = "https://localhost:44370/api/DeleteAutores" + key;
+            var apiUrlDellibro = "https://localhost:44370/api/DeleteLibros" + key;
             var handler = new HttpClientHandler();
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
             using (var client = new HttpClient(handler))
             {
-                var respuestaPelic = await client.DeleteAsync(apiUrlDelPeli);
+                var respuestaLibro = await client.DeleteAsync(apiUrlDellibro);
             }
             return Request.CreateResponse(HttpStatusCode.OK);
         }
-
     }
 }
-

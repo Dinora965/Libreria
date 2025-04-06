@@ -13,5 +13,10 @@ namespace DevExtremeLibreria.Controllers {
         {
             return View();
         }
+
+        public ActionResult Libro()
+        {
+            return View();
+        }
     }
 }

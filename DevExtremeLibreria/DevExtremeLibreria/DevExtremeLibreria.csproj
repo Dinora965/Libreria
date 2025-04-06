@@ -283,6 +283,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Autor.cshtml" />
+    <Content Include="Views\Home\Libro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\Roboto-300.ttf" />
@@ -367,6 +368,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AutorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LibroController.cs" />
     <Compile Include="Controllers\SampleDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
